@@ -66,7 +66,7 @@ GitHubなどのサービスは、リポジトリのトップページを開い�
 推奨の配置図
 現在のあなたのPC上のフォルダ構成は、以下のようになっているのが理想です。
 
-text
+
 ev-battery-degradation-prediction/  
 ├── .git/                  (Gitの管理フォルダ: 隠しフォルダ)
 ├── data/
