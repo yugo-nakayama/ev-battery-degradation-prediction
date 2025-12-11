@@ -1,73 +1,84 @@
-# EV Battery Degradation Prediction & RUL Forecasting
-### EVバッテリーの劣化特性予測および残寿命(RUL)予測モデル
+# EV Battery Degradation Prediction with LSTM
+(EVバッテリーの劣化予測モデル)
 
-![Python](https://img.shields.io/badge/Python-3.9%2B-blue)
-![Library](https://img.shields.io/badge/Library-PyTorch%20%7C%20LightGBM-orange)
-![Status](https://img.shields.io/badge/Status-Development-green)
-![License](https://img.shields.io/badge/License-MIT-lightgrey)
+## 📌 Overview
+NASAの公開データセットを用いて、リチウムイオン電池の劣化状態（SOH: State of Health）を予測するPoCプロジェクトです。
+時系列データ（電圧、電流、温度）からLSTMモデルを用いて将来の容量（Capacity）を予測し、バッテリーの残寿命（RUL）推定への応用を目指しています。
 
-## 📖 概要 (Overview)
-電気自動車（EV）の普及において、バッテリーの劣化状態（SOH: State of Health）と残寿命（RUL: Remaining Useful Life）の正確な予測は、**車両の残価設定、リユース事業の収益性、および安全性担保**における最重要課題です。
+## 📊 Key Results
+- **Model**: LSTM (Long Short-Term Memory) with PyTorch
+- **Performance**: 
+  - Test RMSE: 0.02 Ah (approx.)
+  - Error Rate: < 2.0%
+- **Visualization**:
+  ![Prediction Result](assets/prediction_result.png)
+  
 
-本プロジェクトでは、NASA PCoEの公開データセットを使用し、リチウムイオン電池の充放電サイクルデータからSOHを高精度に予測する機械学習モデルを構築しました。単なる精度追求だけでなく、**製造業の現場導入を見据えた「ロバスト性」と「運用コスト」の評価**も行っています。
+## 🛠 Tech Stack
+- **Language**: Python 3.10
+- **Framework**: PyTorch
+- **Libraries**: Pandas, NumPy, Scikit-learn, Seaborn, Matplotlib
+- **Dataset**: NASA PCoE Battery Dataset (B0005)
 
-## 🎯 目的 (Objectives)
-1.  **高精度な寿命予測**: 初期の充放電サイクルデータから、将来のSOH推移を予測する（目標RMSE < 1.5%）。
-2.  **ビジネスインパクトの可視化**: 過剰な安全マージン削減による推定コストダウン効果を試算する。
-3.  **実運用への適用性検証**: ノイズに対する頑健性や、計算リソース（推論コスト）の最適化を検証する。
+## 🚀 How to Run
+1. Clone this repository
+git clone https://github.com/yourusername/ev-battery-prediction.git
 
-## 📊 データセット (Dataset)
-**NASA PCoE Li-ion Battery Aging Datasets**
-- **Data Source**: [NASA Prognostics Center of Excellence](https://data.nasa.gov/dataset/li-ion-battery-aging-datasets)
-- **Batteries**: B0005, B0006, B0007, B0018 (Operating at Room Temp)
-- **Features**: Voltage, Current, Temperature, Time, Capacity
-- **Scenario**: 定電流-定電圧（CC-CV）充電および定電流（CC）放電によるサイクル劣化試験
+text
+2. Install requirements
+pip install -r requirements.txt
 
-## 🛠️ 技術スタック (Tech Stack)
-- **Language**: Python 3.9
-- **Preprocessing**: Pandas, NumPy, Scipy (MATファイル解析)
-- **Modeling**: 
-  - **Baseline**: LightGBM (Gradient Boosting)
-  - **Advanced**: LSTM / GRU (Recurrent Neural Networks), PyTorch
-- **Evaluation**: RMSE, MAE, R² score
-- **Visualization**: Matplotlib, Seaborn, Plotly
+text
+3. Run the notebook
+Open `notebooks/02_model_training.ipynb` and execute cells.
 
-## 🏆 成功基準とKPI (KPIs & Success Criteria)
+## 📂 Directory Structure
+.
+├── data/ # Dataset (not included in git)
+├── notebooks/ # Jupyter Notebooks for analysis & training
+├── src/ # Python scripts for data loading
+├── assets/ # Images for README
+└── README.md
 
-| Category | KPI | Target | Description |
-| :--- | :--- | :--- | :--- |
-| **Technical** | **SOH RMSE** | **< 1.5%** | 劣化率予測の平均二乗誤差平方根 |
-| **Technical** | **R² Score** | **> 0.95** | モデルの当てはまりの良さ |
-| **Business** | **False Positive Rate** | **< 5%** | 正常な電池を「劣化」と誤判定する率（過剰交換の防止） |
-| **Business** | **Cost Impact** | **-10%** | 最適な交換サイクル予測によるダウンタイム/部品コスト削減率（試算） |
+text
 
-## 🏗️ モデルパイプライン (Pipeline)
+## 💡 Future Work (改善案)
+- 特徴量の追加（電圧プロファイルの変化量など）
+- Attention機構の導入による精度向上
+- 異なるバッテリーセル（B0006, B0007）への汎化性能検証
 
-1.  **Data Ingestion**: `.mat` 形式の生データをパースし、サイクル単位の構造化データへ変換。
-2.  **Feature Engineering**:
-    - 電圧・電流曲線からの統計特徴量（平均、歪度、尖度）抽出。
-    - 容量低下トレンドの平滑化処理。
-3.  **Modeling**:
-    - LightGBMによる重要特徴量の選定。
-    - LSTMによる時系列予測モデルの構築。
-4.  **Evaluation**:
-    - ホールドアウト検証（B0005, B0006, B0007で学習し、B0018でテスト）。
-    - ノイズ付加データによるロバスト性テスト。
+## 👤 Author
+- [Your Name / Link]
+今すぐやるべきこと
+画像の保存: 先ほど作成したグラフを prediction_result.png という名前で保存してください（plt.savefig('prediction_result.png') をコードの最後に足せばOK）。
 
-## 📈 結果 (Results)
-*(※開発進行に合わせてここにグラフや数値を追記します)*
+README作成: 上記のテキストをコピペして README.md を作成。
 
-- **SOH Prediction Accuracy**:
-    - LightGBM: RMSE = x.xx
-    - LSTM: RMSE = x.xx
-- **Robustness Test**:
-    - ノイズレベル5%付加時の精度低下率: x%
+GitHubへPush: これで全世界に公開できる状態になります。
 
-## 🏭 製造業AIとしての評価 (Industrial AI Perspective)
-本PoCでは、アカデミックな精度だけでなく、以下の実運用観点を評価しています。
+ここまで出来たら、このPoCプロジェクトは完成と言っていいでしょう。自信を持って職務経歴書に**「自己研鑽：EVバッテリー劣化予測モデルの開発（NASAデータセット、PyTorch）」**と書けます！
 
-- **ロバスト性 (Robustness)**: センサーノイズを想定した摂動データに対する推論安定性の検証。
-- **ポータビリティ (Portability)**: 異なるバッテリー個体（B0018）への適用性能から、ライン横展開の可能性を評価。
-- **運用コスト (Operational Cost)**: 推論レイテンシとモデルサイズのトレードオフ分析。
+このreadmeはどこのディレクトリに置くべき？リポジトリの最初？
+はい、その通りです。README.md は**リポジトリのルートディレクトリ（一番上の階層）**に置くのが定石です。
 
-## 📂 ディレクトリ構成 (Directory Structure)
+GitHubなどのサービスは、リポジトリのトップページを開いたときに、ルートにある README.md を自動的に表示してくれる仕様になっています。
+
+推奨の配置図
+現在のあなたのPC上のフォルダ構成は、以下のようになっているのが理想です。
+
+text
+ev-battery-degradation-prediction/  
+├── .git/                  (Gitの管理フォルダ: 隠しフォルダ)
+├── data/
+│   └── nasa_battery/
+│       └── B0005_summary.csv
+├── notebooks/
+│   ├── 01_data_loader_EDA.ipynb
+│   └── 02_model_training.ipynb
+├── src/
+│   └── data_loader.py
+├── assets/                
+│   └── prediction_result.png
+├── README.md             
+├── requirements.txt      
+└── .gitignore            
