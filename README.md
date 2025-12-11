@@ -67,18 +67,18 @@ GitHubなどのサービスは、リポジトリのトップページを開い�
 現在のあなたのPC上のフォルダ構成は、以下のようになっているのが理想です。
 
 
-ev-battery-degradation-prediction/  
-├── .git/                  (Gitの管理フォルダ: 隠しフォルダ)
-├── data/
-│   └── nasa_battery/
-│       └── B0005_summary.csv
-├── notebooks/
-│   ├── 01_data_loader_EDA.ipynb
-│   └── 02_model_training.ipynb
-├── src/
-│   └── data_loader.py
-├── assets/                
-│   └── prediction_result.png
-├── README.md             
-├── requirements.txt      
-└── .gitignore            
+ev-battery-degradation-prediction/\
+├── .git/                  (Gitの管理フォルダ: 隠しフォルダ)\
+├── data/\
+│   └── nasa_battery/\
+│       └── B0005_summary.csv\
+├── notebooks/\
+│   ├── 01_data_loader_EDA.ipynb\
+│   └── 02_model_training.ipynb\
+├── src/\
+│   └── data_loader.py\
+├── assets/            \    
+│   └── prediction_result.png\
+├── README.md             \
+├── requirements.txt      \
+└── .gitignore            \
